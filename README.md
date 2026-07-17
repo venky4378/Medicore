@@ -1,4 +1,5 @@
-# 🏥 Hospital Management System
+# 🏥 MediCore
+#### RESTful Healthcare Management System
 
 A RESTful Hospital Management System developed using **Spring Boot**, **Spring Data JPA**, **Hibernate**, and **MySQL**. The application provides APIs for managing hospitals, doctors, patients, and appointments while demonstrating CRUD operations, entity relationships, layered architecture, and centralized exception handling.
 
