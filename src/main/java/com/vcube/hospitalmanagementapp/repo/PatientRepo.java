@@ -10,7 +10,7 @@ import com.vcube.hospitalmanagementapp.model.Patient;
 @Repository
 public interface PatientRepo extends JpaRepository<Patient,Integer> {
 	
-	List<Patient> findByPatientNameContaining(String patientName);
-	Patient findByphone(String phone);
-	Patient findPatientByHospitalId(Integer hospitalId);
+	public List<Patient> findByPatientNameContaining(String patientName);
+	public Patient findByphone(String phone);
+	public Patient findPatientByHospitalId(Integer hospitalId);
 }

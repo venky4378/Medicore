@@ -41,5 +41,4 @@ public class Appointment {
 //	@JsonBackReference
 	private Patient patient;
 	
-
 }
