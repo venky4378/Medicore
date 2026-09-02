@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 import com.vcube.hospitalmanagementapp.model.Appointment;
 
 @Repository
-public interface AppointmentRepo extends JpaRepository<Appointment,Integer>{
-	
+public interface AppointmentRepo extends JpaRepository<Appointment, Integer> {
+
 	List<Appointment> findByDoctorDoctorId(Integer doctorId);
+
 	List<Appointment> findByPatientPatientId(Integer patientId);
+
 	List<Appointment> findByAppointmentDate(LocalDate appointmentDate);
+
 	List<Appointment> findByStatus(String status);
-	List<Appointment> findByHospitalHospitalId(Integer hospitalId);
-	Appointment findByAppointmentId(Integer id);
 }

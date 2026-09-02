@@ -1,11 +1,11 @@
 package com.vcube.hospitalmanagementapp.serviceimpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vcube.hospitalmanagementapp.exception.ResourceNotFoundException;
 import com.vcube.hospitalmanagementapp.model.Appointment;
 import com.vcube.hospitalmanagementapp.repo.AppointmentRepo;
 import com.vcube.hospitalmanagementapp.service.AppointmentService;
@@ -14,39 +14,53 @@ import com.vcube.hospitalmanagementapp.service.AppointmentService;
 public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
-	AppointmentRepo appointmentRepo;
+	private AppointmentRepo appointmentRepo;
 
+	// Save Appointment
+	@Override
 	public Appointment saveAppointment(Appointment appointment) {
 		return appointmentRepo.save(appointment);
 	}
 
+	// Get All Appointments
 	@Override
 	public List<Appointment> getAppointment() {
 		return appointmentRepo.findAll();
 	}
 
-
+	// Get Appointment By ID
 	@Override
-	public Appointment getAppointmentById(Integer id) {
-		return appointmentRepo.findByAppointmentId(id);
+	public Appointment getAppointmentById(Integer appointmentId) {
+
+		return appointmentRepo.findById(appointmentId)
+				.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + appointmentId));
 	}
 
+	// Update Appointment
 	@Override
 	public Appointment updateAppointment(Appointment appointment, Integer appointmentId) {
-		Appointment app = appointmentRepo.findById(appointmentId).orElseThrow();
 
-		appointment.setAppointmentDate(app.getAppointmentDate());
-		appointment.setDoctor(app.getDoctor());
-		appointment.setPatient(app.getPatient());
-		appointment.setStatus(app.getStatus());
+		Appointment existingAppointment = appointmentRepo.findById(appointmentId)
+				.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + appointmentId));
 
-		return appointmentRepo.save(appointment);
+		existingAppointment.setAppointmentDate(appointment.getAppointmentDate());
+
+		existingAppointment.setDoctor(appointment.getDoctor());
+
+		existingAppointment.setPatient(appointment.getPatient());
+
+		existingAppointment.setStatus(appointment.getStatus());
+
+		return appointmentRepo.save(existingAppointment);
 	}
 
+	// Delete Appointment
 	@Override
 	public void deleteAppointment(Integer appointmentId) {
-		appointmentRepo.deleteById(appointmentId);
 
+		Appointment existingAppointment = appointmentRepo.findById(appointmentId)
+				.orElseThrow(() -> new ResourceNotFoundException("Appointment not found with ID: " + appointmentId));
+
+		appointmentRepo.delete(existingAppointment);
 	}
-
 }

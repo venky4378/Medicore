@@ -2,8 +2,6 @@ package com.vcube.hospitalmanagementapp.model;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,30 +13,26 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
-@Table(name="appointment")
+@Table(name = "appointment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Appointment {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer appointmentId;
+
 	private LocalDate appointmentDate;
+
 	private String status;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name="doctor_id")
-//	@JsonBackReference
+	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
-	
+
 	@ManyToOne
-	@JoinColumn(name="patient_id")
-//	@JsonBackReference
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
-	
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.vcube.hospitalmanagementapp.model.Patient;
 
 @Repository
-public interface PatientRepo extends JpaRepository<Patient,Integer> {
-	
-	public List<Patient> findByPatientNameContaining(String patientName);
-	public Patient findByphone(String phone);
-	public Patient findPatientByHospitalId(Integer hospitalId);
+public interface PatientRepo extends JpaRepository<Patient, Integer> {
+
+	List<Patient> findByPatientNameContaining(String patientName);
+
+	Patient findByPhone(String phone);
 }

@@ -1,7 +1,6 @@
 package com.vcube.hospitalmanagementapp.serviceimpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,52 +11,51 @@ import com.vcube.hospitalmanagementapp.repo.PatientRepo;
 import com.vcube.hospitalmanagementapp.service.PatientService;
 
 @Service
-public class PatientServiceImpl implements PatientService{
-	
+public class PatientServiceImpl implements PatientService {
+
 	@Autowired
-	PatientRepo patientRepo;
-	 	
-	public Patient savePatient(Patient patient){
-		System.out.println(patient);
-		System.out.println(patient.getPatientName());
-		System.out.println(patient.getPhone());
-		
+	private PatientRepo patientRepo;
+
+	// Save Patient
+	@Override
+	public Patient savePatient(Patient patient) {
 		return patientRepo.save(patient);
 	}
 
+	// Get All Patients
 	@Override
 	public List<Patient> getPatients() {
 		return patientRepo.findAll();
 	}
 
+	// Get Patient By ID
 	@Override
 	public Patient getPatientsByid(Integer patientId) {
-		return patientRepo.findById(patientId).orElseThrow(()-> new ResourceNotFoundException("Petient not found by Id"));
+
+		return patientRepo.findById(patientId)
+				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
 	}
 
+	// Update Patient
 	@Override
-	public Patient getPatientByDoctorId(Integer doctorId) {
-		return patientRepo.findById(doctorId).orElseThrow(() -> new ResourceNotFoundException("Patient not Found By DoctorId"));
+	public Patient updatePatientById(Patient patient, Integer patientId) {
+
+		Patient existingPatient = patientRepo.findById(patientId)
+				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
+
+		existingPatient.setPatientName(patient.getPatientName());
+		existingPatient.setPhone(patient.getPhone());
+
+		return patientRepo.save(existingPatient);
 	}
 
-	@Override
-	public Patient getPatientByHospitalId(Integer hospitalId) {
-		return patientRepo.findPatientByHospitalId(hospitalId);
-	}
-
-	@Override
-	public Patient updatePatientById(Patient patient,Integer patientId) {
-		Patient pat = patientRepo.findById(patientId).orElse(patient);
-		pat.setPatientId(patient.getPatientId());
-		pat.setPatientName(patient.getPatientName());
-		return patientRepo.save(pat);
-	}
-
+	// Delete Patient
 	@Override
 	public void deletePatientById(Integer patientId) {
-		patientRepo.deleteById(patientId);
+
+		Patient existingPatient = patientRepo.findById(patientId)
+				.orElseThrow(() -> new ResourceNotFoundException("Patient not found with ID: " + patientId));
+
+		patientRepo.delete(existingPatient);
 	}
-
-	
-
 }

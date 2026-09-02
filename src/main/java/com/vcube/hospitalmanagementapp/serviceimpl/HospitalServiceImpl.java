@@ -33,7 +33,8 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public Hospital getHospitalById(Integer hospitalId) {
-		return hospitalRepo.findById(hospitalId).orElseThrow(() -> new ResourceNotFoundException("Hospital Not Found with ID :"+hospitalId));
+		return hospitalRepo.findById(hospitalId)
+				.orElseThrow(() -> new ResourceNotFoundException("Hospital Not Found with ID :" + hospitalId));
 	}
 
 	@Override
@@ -42,8 +43,12 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public Hospital updateHospitalById(Hospital hospital) {
-		return hospitalRepo.save(hospital);
+	public Hospital updateHospitalById(Hospital hospital, Integer hospitalId) {
+		Hospital hos = hospitalRepo.findById(hospitalId)
+				.orElseThrow(() -> new ResourceNotFoundException("Hospital Not Found with ID: " + hospitalId));
+		hos.setHospitalName(hospital.getHospitalName());
+		hos.setLocation(hospital.getLocation());
+		return hospitalRepo.save(hos);
 	}
 
 	@Override

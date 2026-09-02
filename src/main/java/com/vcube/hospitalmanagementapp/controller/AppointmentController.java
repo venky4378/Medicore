@@ -14,43 +14,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vcube.hospitalmanagementapp.model.Appointment;
 import com.vcube.hospitalmanagementapp.service.AppointmentService;
+
 @RestController
 @RequestMapping("/appointment/api/v1")
 public class AppointmentController {
-	
+
 	@Autowired
-	AppointmentService appointmentService;
-	
-	@PostMapping("/saveappointment/api/v1")
-	public Appointment saveAppointment(@RequestBody Appointment appointment) {	
-		 System.out.println("Date : " + appointment.getAppointmentDate());
-		    System.out.println("Status : " + appointment.getStatus());
-		    System.out.println("Doctor : " + appointment.getDoctor());
-		    System.out.println("Patient : " + appointment.getPatient());
+	private AppointmentService appointmentService;
+
+	// Save Appointment
+	@PostMapping("/saveappointment")
+	public Appointment saveAppointment(@RequestBody Appointment appointment) {
+
 		return appointmentService.saveAppointment(appointment);
 	}
-	   
-	
-	
-	@GetMapping("/getappointment/{appointmentid}")
+
+	// Get Appointment By ID
+	@GetMapping("/getappointment/{appointmentId}")
 	public Appointment getAppointment(@PathVariable Integer appointmentId) {
+
 		return appointmentService.getAppointmentById(appointmentId);
 	}
-	
+
+	// Get All Appointments
 	@GetMapping("/getappointments")
-	public List<Appointment> getAllAppointments(){
+	public List<Appointment> getAllAppointments() {
+
 		return appointmentService.getAppointment();
 	}
-	
-	@DeleteMapping("/deleteappointment/{id}")
-	public String deleteAppointment(@PathVariable Integer id) {
-		appointmentService.deleteAppointment(id);
-		return "delete successfully";
-	}
-	
-	@PatchMapping("updateappointment/{id}")
-	public Appointment updateAppointment(@RequestBody Appointment appointment, @PathVariable Integer id) {
-		return appointmentService.updateAppointment(appointment,id);
-	}  
 
+	// Update Appointment
+	@PatchMapping("/updateappointment/{appointmentId}")
+	public Appointment updateAppointment(@RequestBody Appointment appointment, @PathVariable Integer appointmentId) {
+
+		return appointmentService.updateAppointment(appointment, appointmentId);
+	}
+
+	// Delete Appointment
+	@DeleteMapping("/deleteappointment/{appointmentId}")
+	public String deleteAppointment(@PathVariable Integer appointmentId) {
+
+		appointmentService.deleteAppointment(appointmentId);
+
+		return "Appointment deleted successfully";
+	}
 }

@@ -17,7 +17,7 @@ public interface HospitalService {
 	
 	public abstract Hospital getHospitalByName(String hospitalName);
 	
-	public abstract  Hospital updateHospitalById(Hospital hospital);
+	public abstract  Hospital updateHospitalById(Hospital hospital,Integer hospitalId);
 	
 	public abstract void deleteHospitalBId(Integer hospitalId);
 	
