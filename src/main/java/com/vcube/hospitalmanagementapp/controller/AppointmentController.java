@@ -3,6 +3,7 @@ package com.vcube.hospitalmanagementapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,6 +18,7 @@ import com.vcube.hospitalmanagementapp.service.AppointmentService;
 
 @RestController
 @RequestMapping("/appointment/api/v1")
+@CrossOrigin(origins = "*") // FIX 1: Add CORS Support
 public class AppointmentController {
 
 	@Autowired
@@ -25,37 +27,31 @@ public class AppointmentController {
 	// Save Appointment
 	@PostMapping("/saveappointment")
 	public Appointment saveAppointment(@RequestBody Appointment appointment) {
-
 		return appointmentService.saveAppointment(appointment);
 	}
 
 	// Get Appointment By ID
 	@GetMapping("/getappointment/{appointmentId}")
 	public Appointment getAppointment(@PathVariable Integer appointmentId) {
-
 		return appointmentService.getAppointmentById(appointmentId);
 	}
 
-	// Get All Appointments
-	@GetMapping("/getappointments")
+	// FIX 2: Added /getAllAppointments alias to match frontend service call
+	@GetMapping({"/getappointments", "/getAllAppointments"})
 	public List<Appointment> getAllAppointments() {
-
 		return appointmentService.getAppointment();
 	}
 
 	// Update Appointment
 	@PatchMapping("/updateappointment/{appointmentId}")
 	public Appointment updateAppointment(@RequestBody Appointment appointment, @PathVariable Integer appointmentId) {
-
 		return appointmentService.updateAppointment(appointment, appointmentId);
 	}
 
 	// Delete Appointment
 	@DeleteMapping("/deleteappointment/{appointmentId}")
 	public String deleteAppointment(@PathVariable Integer appointmentId) {
-
 		appointmentService.deleteAppointment(appointmentId);
-
 		return "Appointment deleted successfully";
 	}
 }

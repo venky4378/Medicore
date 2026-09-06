@@ -52,7 +52,7 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public void deleteHospitalBId(Integer hospitalId) {
+	public void deleteHospitalById(Integer hospitalId) {
 		hospitalRepo.deleteById(hospitalId);
 	}
 

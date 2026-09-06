@@ -2,8 +2,6 @@ package com.vcube.hospitalmanagementapp.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.vcube.hospitalmanagementapp.model.Doctor;
 
 public interface DoctorService {
@@ -20,5 +18,5 @@ public interface DoctorService {
 	
 	public abstract void  deleteDoctorById(Integer doctorId);
 	
-	public abstract Doctor updateDoctor(Doctor doctor);
+	public abstract Doctor updateDoctorById(Doctor doctor,Integer doctorId);
 }

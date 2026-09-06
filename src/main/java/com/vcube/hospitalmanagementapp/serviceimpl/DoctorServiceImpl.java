@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.vcube.hospitalmanagementapp.exception.ResourceNotFoundException;
 import com.vcube.hospitalmanagementapp.model.Doctor;
 import com.vcube.hospitalmanagementapp.repo.DoctorRepo;
 import com.vcube.hospitalmanagementapp.service.DoctorService;
@@ -41,8 +42,12 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public Doctor updateDoctor(Doctor doctor) {
-		return doctorRepo.save(doctor);
+	public Doctor updateDoctorById(Doctor doctor, Integer doctorId) {
+		Doctor doc = doctorRepo.findById(doctorId)
+				.orElseThrow(() -> new ResourceNotFoundException("Doctor is not Found with the particular Id"));
+		doc.setDoctorName(doctor.getDoctorName());
+		doc.setSpecialization(doctor.getSpecialization());
+		return doctorRepo.save(doc);
 	}
 
 	@Override

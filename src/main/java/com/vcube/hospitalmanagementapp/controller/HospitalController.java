@@ -3,6 +3,7 @@ package com.vcube.hospitalmanagementapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,37 +18,43 @@ import com.vcube.hospitalmanagementapp.service.HospitalService;
 @RestController
 @RequestMapping("/hospital/api/v1")
 public class HospitalController {
-	
+
 	@Autowired
 	HospitalService hospitalService;
-	
-	@PostMapping("/savehospital"	)
+
+	@PostMapping("/savehospital")
 	public Hospital saveHospitalInfo(@RequestBody Hospital hospital) {
 		return hospitalService.saveHospital(hospital);
 	}
-	
+
 	@GetMapping("/getAllHospitals")
-	public List<Hospital> getHospital(){
+	public List<Hospital> getHospital() {
 		return hospitalService.getAllHospital();
 	}
-	
+
 	@GetMapping("/getHospitalByName/{hospitalName}")
-	public Hospital getHospitalByName(@PathVariable String hospitalName){
+	public Hospital getHospitalByName(@PathVariable String hospitalName) {
 		return hospitalService.getHospitalByName(hospitalName);
 	}
-	
+
 	@GetMapping("/getByHospitalById/{hospitalId}")
 	public Hospital getHospitalById(@PathVariable Integer hospitalId) {
 		return hospitalService.getHospitalById(hospitalId);
 	}
-	
+
 	@GetMapping("/getHospitalByLocation/{location}")
 	public List<Hospital> getHospitalByLocation(@PathVariable String location) {
 		return hospitalService.getHospitalListByLocation(location);
 	}
-	
+
 	@PutMapping("/updatehospital/{hospitalId}")
-	public Hospital updateHospital(@RequestBody Hospital hospital,@PathVariable Integer hospitalId) {
-		return hospitalService.updateHospitalById(hospital,hospitalId);
+	public Hospital updateHospital(@RequestBody Hospital hospital, @PathVariable Integer hospitalId) {
+		return hospitalService.updateHospitalById(hospital, hospitalId);
+	}
+
+	@DeleteMapping("/deletehospital/{hospitalId}")
+	public String deleteHospital(@PathVariable Integer hospitalId) {
+		hospitalService.deleteHospitalById(hospitalId);
+		return "Hospital deleted successfully";
 	}
 }

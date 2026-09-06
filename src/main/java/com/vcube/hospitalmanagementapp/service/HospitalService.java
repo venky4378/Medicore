@@ -19,7 +19,7 @@ public interface HospitalService {
 	
 	public abstract  Hospital updateHospitalById(Hospital hospital,Integer hospitalId);
 	
-	public abstract void deleteHospitalBId(Integer hospitalId);
+	public abstract void deleteHospitalById(Integer hospitalId);
 	
 	
 	
